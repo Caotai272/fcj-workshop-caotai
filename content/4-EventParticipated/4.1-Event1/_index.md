@@ -55,7 +55,7 @@ The academic highlight of the article is the methods that stimulate the reasonin
 
 ### Event Experience
 
-- **Professional learning environment**: The event brought a tech-rich space, connecting academic theory with practical enterprise applications.
-- **Learned how real projects are built**: Listened to sharing from Mr. Nguyen Tuan Thinh (DevOps/Cloud Engineer), helping narrow the gap between school knowledge and actual labor market requirements. The open atmosphere encouraged asking questions and debating.
+- **Professional learning environment**: The event offered a strongly tech-oriented space that bridged academic theory with real-world enterprise applications.
+- **Insight into how real projects are built**: Listening to Mr. Nguyen Tuan Thinh (DevOps/Cloud Engineer) share his experience helped close the gap between what we learn at school and the actual demands of the job market. The open and friendly atmosphere encouraged asking questions and healthy debate.
 
 > Overall, the event not only provided technical knowledge but also helped me reshape my thinking about application design, system modernization, and more effective cross-team collaboration.
