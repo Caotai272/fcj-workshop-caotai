@@ -7,49 +7,78 @@ pre: " <b> 1.4. </b> "
 ---
 
 
+# Week 4 Worklog
 
-### Week 4 Objectives:
+## Week 4 Objectives
 
-* Connect and get acquainted with members of First Cloud Journey.
-* Understand basic AWS services, how to use the console & CLI.
+In week 4, the main goal was to explore the **Amazon Elastic Compute Cloud - EC2** service and its related components when deploying virtual servers on AWS. This week's content belongs to the **Explore / AWS Service Exploration** group, where the AWS Study Group covers deploying and optimizing compute services, including EC2, Auto Scaling, and supporting components for application operations. ([Cloud Journey][1])
 
-### Tasks to be carried out this week:
-| Day | Task                                                                                                                                                                                                   | Start Date | Completion Date | Reference Material                        |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
-| 2   | - Get acquainted with FCJ members <br> - Read and take note of internship unit rules and regulations                                                                                                   | 08/11/2025 | 08/11/2025      |
-| 3   | - Learn about AWS and its types of services <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                              | 08/12/2025 | 08/12/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Create AWS Free Tier account <br> - Learn about AWS Console & AWS CLI <br> - **Practice:** <br>&emsp; + Create AWS account <br>&emsp; + Install & configure AWS CLI <br> &emsp; + How to use AWS CLI | 08/13/2025 | 08/13/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Learn basic EC2: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - SSH connection methods to EC2 <br> - Learn about Elastic IP   <br>                            | 08/14/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Practice:** <br>&emsp; + Launch an EC2 instance <br>&emsp; + Connect via SSH <br>&emsp; + Attach an EBS volume                                                                                     | 08/15/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
+Key topics for the week include:
 
+* Getting an overview of Amazon EC2.
+* Exploring AMI, Instance Type, Key Pair, and Security Group.
+* Practicing launching a Linux EC2 Instance.
+* Learning how to connect to EC2 via SSH.
+* Learning how to change EC2 Instance configuration.
+* Exploring Elastic Load Balancer and Auto Scaling Group.
+* Noting common errors when deploying EC2.
 
-### Week 4 Achievements:
+---
 
-* Understood what AWS is and mastered the basic service groups: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+## Tasks to be carried out this week
 
-* Successfully created and configured an AWS Free Tier account.
+| No. | Task                                                                                                                                           | Start Date | Completion Date | Reference Material                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| --- | --- | --- | --- | --- |
+| **1** | Get an overview of Amazon EC2 and its role in creating virtual servers and deploying applications on AWS.                                    | 05/11/2026 | 05/11/2026 | [https://cloudjourney.awsstudygroup.com/1-explore/](https://cloudjourney.awsstudygroup.com/1-explore/) <br> [https://000004.awsstudygroup.com/](https://000004.awsstudygroup.com/) <br> [https://000004.awsstudygroup.com/1-introduce/](https://000004.awsstudygroup.com/1-introduce/)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| **2** | Explore AMI, Instance Type, Key Pair, EBS, and Security Group when launching an EC2 Instance.                                                | 05/12/2026 | 05/12/2026 | [https://000004.awsstudygroup.com/1-introduce/](https://000004.awsstudygroup.com/1-introduce/) <br> [https://000004.awsstudygroup.com/2-prerequiste/2.3-createsecuritygrouplinux/](https://000004.awsstudygroup.com/2-prerequiste/2.3-createsecuritygrouplinux/)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| **3** | Practice creating a Linux EC2 Instance, choosing Amazon Linux 2023 AMI, and configuring Key Pair, VPC, Subnet, and Security Group.            | 05/13/2026 | 05/13/2026 | [https://000004.awsstudygroup.com/4-launchlinuxinstance/](https://000004.awsstudygroup.com/4-launchlinuxinstance/) <br> [https://000004.awsstudygroup.com/4-launchlinuxinstance/4.1-createlinuxinstance/](https://000004.awsstudygroup.com/4-launchlinuxinstance/4.1-createlinuxinstance/)                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| **4** | Learn how to connect to a Linux EC2 Instance via SSH, check instance status, and handle common connection errors.                            | 05/14/2026 | 05/14/2026 | [https://000004.awsstudygroup.com/4-launchlinuxinstance/4.2-connectlinuxinstance/](https://000004.awsstudygroup.com/4-launchlinuxinstance/4.2-connectlinuxinstance/) <br> [https://000004.awsstudygroup.com/5-amazonec2basic/5.1-changeconfigureec2/](https://000004.awsstudygroup.com/5-amazonec2basic/5.1-changeconfigureec2/)                                                                                                                                                                                                                                                                                                                                                                                                       |
+| **5** | Explore Load Balancer, Auto Scaling Group, EBS Snapshot, and clean up resources after practice to avoid unexpected costs.                    | 05/15/2026 | 05/15/2026 | [https://000006.awsstudygroup.com/](https://000006.awsstudygroup.com/) <br> [https://000006.awsstudygroup.com/4-setup-load-balancer/](https://000006.awsstudygroup.com/4-setup-load-balancer/) <br> [https://000006.awsstudygroup.com/6-create-auto-scaling-group/](https://000006.awsstudygroup.com/6-create-auto-scaling-group/) <br> [https://000004.awsstudygroup.com/5-amazonec2basic/5.2-createec2snapshot/](https://000004.awsstudygroup.com/5-amazonec2basic/5.2-createec2snapshot/)                                                                                                                                                                                                                                                       |
 
-* Became familiar with the AWS Management Console and learned how to find, access, and use services via the web interface.
+---
 
-* Installed and configured AWS CLI on the computer, including:
-  * Access Key
-  * Secret Key
-  * Default Region
-  * ...
+## Week 4 Achievements
 
-* Used AWS CLI to perform basic operations such as:
+### Overview
 
-  * Check account & configuration information
-  * Retrieve the list of regions
-  * View EC2 service
-  * Create and manage key pairs
-  * Check information about running services
-  * ...
+This week, I explored **Amazon EC2**, the core virtual server service of AWS. Amazon EC2 lets you launch virtual servers quickly, choose a configuration to fit your needs, and deploy many types of workloads such as websites, applications, databases, or backend services. ([Aws Study Group][2])
 
-* Acquired the ability to connect between the web interface and CLI to manage AWS resources in parallel.
-* ...
+### Knowledge gained
+
+After completing week 4, I have understood:
+
+* The role of **Amazon EC2** in providing compute resources on AWS.
+* The concept of **AMI - Amazon Machine Image**, used as a template to launch an EC2 Instance.
+* That **Instance Type** affects the CPU, RAM, network, and storage of the virtual server.
+* That **Key Pair** is used to authenticate when connecting to an EC2 Instance, and the private key must be protected carefully. ([Aws Study Group][3])
+* How to configure a **Security Group** to control inbound and outbound traffic to the EC2 Instance.
+* The role of **EBS Snapshot** in backing up data and recovering the system. ([Aws Study Group][4])
+* The basics of **Elastic Load Balancer** and **Auto Scaling Group** in distributing load and automatically scaling the number of instances. ([Aws Study Group][5])
+
+### Practice
+
+During the learning and practice process, I was able to:
+
+* Access the EC2 service on the AWS Management Console.
+* Learn the EC2 Instance creation process.
+* Choose Amazon Linux 2023 AMI when launching a virtual server.
+* Configure Instance Type, Key Pair, VPC, Subnet, and Security Group.
+* Set up Security Group rules, including SSH, HTTP, and HTTPS.
+* Connect to the Linux EC2 Instance via SSH.
+* Check the operational status of the instance.
+* Learn how to change the EC2 Instance Type to upgrade resources when needed.
+* Learn the EBS Snapshot creation process to back up data.
+* Explore Load Balancer and Auto Scaling Group to improve availability, scalability, and operational efficiency.
+* Note common errors such as unopened port 22, wrong key pair, instance without a public IP, wrong subnet, or a security group that does not allow access.
+
+---
+
+## Week 4 Summary
+
+**Week 4:** Explore EC2, AMI, Instance Type, Key Pair, Security Group, EBS Snapshot, Load Balancer, and Auto Scaling. Understand how to launch a virtual server, connect to an EC2 Instance, configure access security, and explore the system scaling mechanism on AWS.
+
+[1]: https://cloudjourney.awsstudygroup.com/1-explore/ "Explore AWS Services :: First Journey to the Cloud"
+[2]: https://000004.awsstudygroup.com/1-introduce/ "Introduction :: INTRODUCTION TO AMAZON EC2"
+[3]: https://000004.awsstudygroup.com/4-launchlinuxinstance/4.1-createlinuxinstance/ "Create Linux instance :: INTRODUCTION TO AMAZON EC2"
+[4]: https://000004.awsstudygroup.com/5-amazonec2basic/5.2-createec2snapshot/ "Create and manage EBS Snapshots :: INTRODUCTION TO AMAZON EC2"
+[5]: https://000006.awsstudygroup.com/ "Deploying FCJ Management application with Auto Scaling Group :: DEPLOYING FCJ MANAGEMENT APPLICATION WITH AUTO SCALING GROUP"

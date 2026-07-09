@@ -9,46 +9,53 @@ pre: " <b> 1.1. </b> "
 
 ### Week 1 Objectives:
 
-* Connect and get acquainted with members of First Cloud Journey.
-* Understand basic AWS services, how to use the console & CLI.
+In the first week, the main goal was to get familiar with the Amazon Web Services - AWS platform, grasp the basic concepts of cloud computing, learn how to use the AWS Management Console, and understand the role of foundational services in the system deployment process.
+
+Key topics for the week include:
+
+* Getting an overview of AWS, Cloud Computing, Region, Availability Zone, and the AWS Management Console.
+* Exploring the AWS Identity and Access Management - IAM service to manage users, user groups, roles, and permission policies.
+* Exploring the Amazon Virtual Private Cloud - VPC service to build a private network environment on AWS.
+* Exploring the Amazon Elastic Compute Cloud - EC2 service to create and manage virtual servers.
+* Practicing basic operations such as signing in to the AWS Console, creating an IAM User, exploring VPC, Security Group, and launching an EC2 Instance.
+
+The AWS Study Group groups these foundational topics under the AWS Service Exploration section, covering the AWS account, IAM, VPC, and EC2.
 
 ### Tasks to be carried out this week:
-| Day | Task                                                                                                                                                                                                   | Start Date | Completion Date | Reference Material                        |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
-| 2   | - Get acquainted with FCJ members <br> - Read and take note of internship unit rules and regulations                                                                                                   | 08/11/2025 | 08/11/2025      |
-| 3   | - Learn about AWS and its types of services <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                              | 08/12/2025 | 08/12/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Create AWS Free Tier account <br> - Learn about AWS Console & AWS CLI <br> - **Practice:** <br>&emsp; + Create AWS account <br>&emsp; + Install & configure AWS CLI <br> &emsp; + How to use AWS CLI | 08/13/2025 | 08/13/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Learn basic EC2: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - SSH connection methods to EC2 <br> - Learn about Elastic IP   <br>                            | 08/14/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Practice:** <br>&emsp; + Launch an EC2 instance <br>&emsp; + Connect via SSH <br>&emsp; + Attach an EBS volume                                                                                     | 08/15/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-
+| No. | Task | Start Date | Completion Date | Reference Material |
+| --- | --- | --- | --- | --- |
+| 1 | Get familiar with AWS, explore cloud computing concepts, AWS Account, Free Tier, Region, Availability Zone, and the AWS Management Console interface. | 04/20/2026 | 04/20/2026 | https://000001.awsstudygroup.com/vi/ |
+| 2 | Explore the IAM service, including IAM User, IAM Group, IAM Role, IAM Policy, and the principle of least privilege when using an AWS account. | 04/21/2026 | 04/21/2026 | https://000002.awsstudygroup.com/vi/ |
+| 3 | Explore Amazon VPC and basic network components such as Subnet, Route Table, Internet Gateway, NAT Gateway, Security Group, and Network ACL. | 04/22/2026 | 04/22/2026 | https://000003.awsstudygroup.com/vi/ |
+| 4 | Explore Amazon EC2, how to launch Linux/Windows virtual servers, configure Key Pair, Security Group, and connect to an EC2 Instance. | 04/23/2026 | 04/23/2026 | https://000004.awsstudygroup.com/vi/ |
+| 5 | Consolidate the knowledge learned, note common errors when configuring IAM, VPC, and EC2, and clean up resources to avoid unexpected costs. | 04/24/2026 | 04/24/2026 | https://000004.awsstudygroup.com/vi/ |
 
 ### Week 1 Achievements:
 
-* Understood what AWS is and mastered the basic service groups: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+**Overview**
 
-* Successfully created and configured an AWS Free Tier account.
+This week, I focused on learning the foundational knowledge of AWS, including AWS Cloud, IAM, VPC, and EC2. These are basic services that play an important role when deploying any system on the AWS cloud computing platform.
 
-* Became familiar with the AWS Management Console and learned how to find, access, and use services via the web interface.
+**Knowledge gained**
 
-* Installed and configured AWS CLI on the computer, including:
-  * Access Key
-  * Secret Key
-  * Default Region
-  * ...
+After completing week 1, I have understood:
 
-* Used AWS CLI to perform basic operations such as:
+* An overview of AWS, the cloud computing model, and how to access services through the AWS Management Console.
+* The role of IAM in managing accounts, controlling access, and securing AWS resources.
+* How VPC works as a virtual private network on AWS, including subnet, route table, internet gateway, and security group.
+* The function of EC2 in creating virtual servers, deploying Linux/Windows environments, and running basic applications.
+* The importance of cleaning up resources after practice to avoid unnecessary costs.
 
-  * Check account & configuration information
-  * Retrieve the list of regions
-  * View EC2 service
-  * Create and manage key pairs
-  * Check information about running services
-  * ...
+**Practice**
 
-* Acquired the ability to connect between the web interface and CLI to manage AWS resources in parallel.
-* ...
+During the learning and practice process, I was able to:
+
+* Access the AWS Management Console and get familiar with the service management interface.
+* Learn how to create IAM User, IAM Group, IAM Role, and assign appropriate Policies.
+* Observe the network structure in Amazon VPC, including public subnet, private subnet, route table, and security group.
+* Learn the EC2 Instance launch process, choosing the operating system, configuring key pair and security group.
+* Note down common errors such as IAM permission errors, EC2 connection errors, Security Group misconfiguration, and how to investigate the root cause.
+
+**Week 1 Summary**
+
+Week 1: Get familiar with AWS, IAM, VPC, and EC2. Explore the AWS platform in general, learn how to manage access with IAM, build a private network with VPC, and launch virtual servers with EC2.
