@@ -6,119 +6,89 @@ chapter: false
 pre: " <b> 3.1. </b> "
 ---
 
+## Hiện đại hóa KYC với các giải pháp serverless của AWS và AI agent cho dịch vụ tài chính
 
-# Bắt đầu với healthcare data lakes: Sử dụng microservices
+Trong bối cảnh ngành tài chính yêu cầu tốc độ xử lý nhanh và tính bảo mật khắt khe, quy trình KYC truyền thống thường gặp trở ngại do thao tác thủ công, thời gian chờ đợi kéo dài và khả năng sai sót cao. Bài viết này trình bày cách các tổ chức tài chính có thể chuyển đổi quy trình này bằng kiến trúc Serverless kết hợp với AI Agents.
 
-Các data lake có thể giúp các bệnh viện và cơ sở y tế chuyển dữ liệu thành những thông tin chi tiết về doanh nghiệp và duy trì hoạt động kinh doanh liên tục, đồng thời bảo vệ quyền riêng tư của bệnh nhân. **Data lake** là một kho lưu trữ tập trung, được quản lý và bảo mật để lưu trữ tất cả dữ liệu của bạn, cả ở dạng ban đầu và đã xử lý để phân tích. data lake cho phép bạn chia nhỏ các kho chứa dữ liệu và kết hợp các loại phân tích khác nhau để có được thông tin chi tiết và đưa ra các quyết định kinh doanh tốt hơn.
+* * *
 
-Bài đăng trên blog này là một phần của loạt bài lớn hơn về việc bắt đầu cài đặt data lake dành cho lĩnh vực y tế. Trong bài đăng blog cuối cùng của tôi trong loạt bài, *“Bắt đầu với data lake dành cho lĩnh vực y tế: Đào sâu vào Amazon Cognito”*, tôi tập trung vào các chi tiết cụ thể của việc sử dụng Amazon Cognito và Attribute Based Access Control (ABAC) để xác thực và ủy quyền người dùng trong giải pháp data lake y tế. Trong blog này, tôi trình bày chi tiết cách giải pháp đã phát triển ở cấp độ cơ bản, bao gồm các quyết định thiết kế mà tôi đã đưa ra và các tính năng bổ sung được sử dụng. Bạn có thể truy cập các code samples cho giải pháp tại Git repo này để tham khảo.
+## Vai trò quan trọng của KYC
 
----
+  * Bảo vệ hệ thống tài chính: KYC thực hiện xác minh danh tính khách hàng và phát hiện gian lận để bảo vệ sự an toàn của hệ thống.
 
-## Hướng dẫn kiến trúc
+  * Hỗ trợ tuân thủ quy định pháp lý: KYC đóng vai trò then chốt trong việc tuân thủ các quy định về chống rửa tiền (AML) và chống tài trợ khủng bố (CTF).
 
-Thay đổi chính kể từ lần trình bày cuối cùng của kiến trúc tổng thể là việc tách dịch vụ đơn lẻ thành một tập hợp các dịch vụ nhỏ để cải thiện khả năng bảo trì và tính linh hoạt. Việc tích hợp một lượng lớn dữ liệu y tế khác nhau thường yêu cầu các trình kết nối chuyên biệt cho từng định dạng; bằng cách giữ chúng được đóng gói riêng biệt với microservices, chúng ta có thể thêm, xóa và sửa đổi từng trình kết nối mà không ảnh hưởng đến những kết nối khác. Các microservices được kết nối rời thông qua tin nhắn publish/subscribe tập trung trong cái mà tôi gọi là “pub/sub hub”.
+  * Ngăn chặn gian lận: Quy trình này giúp phát hiện và ngăn chặn các hành vi đánh cắp danh tính cũng như sử dụng tài liệu giả mạo.
 
-Giải pháp này đại diện cho những gì tôi sẽ coi là một lần lặp nước rút hợp lý khác từ last post của tôi. Phạm vi vẫn được giới hạn trong việc nhập và phân tích cú pháp đơn giản của các **HL7v2 messages** được định dạng theo **Quy tắc mã hóa 7 (ER7)** thông qua giao diện REST.
+  * Quản lý rủi ro: KYC hỗ trợ đánh giá hồ sơ khách hàng và giám sát các giao dịch tài chính để kiểm soát rủi ro.
 
-**Kiến trúc giải pháp bây giờ như sau:**
+  * Xây dựng lòng tin: Việc thực hiện KYC tạo ra sự minh bạch, từ đó củng cố lòng tin của khách hàng đối với tổ chức tài chính.
 
-> *Hình 1. Kiến trúc tổng thể; những ô màu thể hiện những dịch vụ riêng biệt.*
+  * Sự phức tạp khi mở rộng: Việc tuân thủ KYC ngày càng trở nên khó khăn khi các tổ chức tài chính mở rộng sang nhiều sản phẩm, phân khúc khách hàng (bán lẻ, SME, doanh nghiệp) và khu vực địa lý khác nhau.
 
----
+  * Yêu cầu về khuôn khổ pháp lý: Hoạt động trên nhiều khu vực đòi hỏi phải tuân thủ các khuôn khổ quy định đa dạng như BSA, Đạo luật USA PATRIOT (Hoa Kỳ), AMLD (EU), cũng như các hướng dẫn từ FATF và MAS (Singapore).
 
-Mặc dù thuật ngữ *microservices* có một số sự mơ hồ cố hữu, một số đặc điểm là chung:  
-- Chúng nhỏ, tự chủ, kết hợp rời rạc  
-- Có thể tái sử dụng, giao tiếp thông qua giao diện được xác định rõ  
-- Chuyên biệt để giải quyết một việc  
-- Thường được triển khai trong **event-driven architecture**
 
-Khi xác định vị trí tạo ranh giới giữa các microservices, cần cân nhắc:  
-- **Nội tại**: công nghệ được sử dụng, hiệu suất, độ tin cậy, khả năng mở rộng  
-- **Bên ngoài**: chức năng phụ thuộc, tần suất thay đổi, khả năng tái sử dụng  
-- **Con người**: quyền sở hữu nhóm, quản lý *cognitive load*
 
----
 
-## Lựa chọn công nghệ và phạm vi giao tiếp
+* * *
 
-| Phạm vi giao tiếp                        | Các công nghệ / mô hình cần xem xét                                                        |
-| ---------------------------------------- | ------------------------------------------------------------------------------------------ |
-| Trong một microservice                   | Amazon Simple Queue Service (Amazon SQS), AWS Step Functions                               |
-| Giữa các microservices trong một dịch vụ | AWS CloudFormation cross-stack references, Amazon Simple Notification Service (Amazon SNS) |
-| Giữa các dịch vụ                         | Amazon EventBridge, AWS Cloud Map, Amazon API Gateway                                      |
+## KYC truyền thống
 
----
+Các quy trình KYC truyền thống xác minh danh tính khách hàng, đánh giá rủi ro và giám sát rửa tiền. Chúng dựa vào việc thu thập tài liệu thủ công, kiểm tra danh tính trên nhiều cơ sở dữ liệu và đánh giá định kỳ. Mặc dù các quy trình đã được thiết lập này đã phục vụ ngành tài chính trong nhiều thập kỷ, nhưng chúng được thiết kế cho một kỷ nguyên khác với khối lượng giao dịch thấp hơn, các sản phẩm đơn giản hơn và bối cảnh mối đe dọa ít tinh vi hơn. Môi trường tài chính ưu tiên kỹ thuật số ngày nay đòi hỏi một sự tái hình dung cơ bản về KYC ở quy mô lớn.
 
-## The pub/sub hub
+* * *
 
-Việc sử dụng kiến trúc **hub-and-spoke** (hay message broker) hoạt động tốt với một số lượng nhỏ các microservices liên quan chặt chẽ.  
-- Mỗi microservice chỉ phụ thuộc vào *hub*  
-- Kết nối giữa các microservice chỉ giới hạn ở nội dung của message được xuất  
-- Giảm số lượng synchronous calls vì pub/sub là *push* không đồng bộ một chiều
+## Kiến trúc giải pháp KYC gốc đám mây sử dụng AI tác nhân
 
-Nhược điểm: cần **phối hợp và giám sát** để tránh microservice xử lý nhầm message.
+![Kiến trúc tác nhân cấp cao cho KYC theo thời gian thực](/images/3-BlogsTranslated/kientruc.png)
 
----
+* * *
 
-## Core microservice
+## Các thành phần giải pháp
 
-Cung cấp dữ liệu nền tảng và lớp truyền thông, gồm:  
-- **Amazon S3** bucket cho dữ liệu  
-- **Amazon DynamoDB** cho danh mục dữ liệu  
-- **AWS Lambda** để ghi message vào data lake và danh mục  
-- **Amazon SNS** topic làm *hub*  
-- **Amazon S3** bucket cho artifacts như mã Lambda
+**Cơ sở hạ tầng giao tiếp hướng sự kiện với Amazon MSK**
 
-> Chỉ cho phép truy cập ghi gián tiếp vào data lake qua hàm Lambda → đảm bảo nhất quán.
+  * Amazon MSK đóng vai trò là xương sống giao tiếp, cho phép trao đổi tin nhắn không đồng bộ, theo thời gian thực giữa các thành phần AI tác nhân và các hệ thống doanh nghiệp. Cơ sở hạ tầng streaming được tổ chức thành các danh mục topic riêng biệt hỗ trợ luồng hai chiều.
+  * Các topic đầu vào (Inbound topics) thu thập tương tác của khách hàng thông qua các yêu cầu KYC (đơn đăng ký mới), tải lên tài liệu (giấy tờ tùy thân), kết quả xác minh ID (phản hồi từ nhà cung cấp bên thứ ba) và các sự kiện giao dịch (tín hiệu gian lận/rủi ro).
+  * Các topic đầu ra (Outbound topics) xuất bản các quyết định KYC với điểm tin cậy và nhật ký kiểm toán đến các hệ thống ngân hàng lõi, định tuyến các trường hợp phức tạp đến người đánh giá thông qua các sự kiện quản lý trường hợp và kích hoạt cảnh báo gian lận cho các nhóm bảo mật. **Lớp điều phối AI tác nhân** Tác nhân Giám sát Điều phối KYC
 
----
 
-## Front door microservice
 
-- Cung cấp API Gateway để tương tác REST bên ngoài  
-- Xác thực & ủy quyền dựa trên **OIDC** thông qua **Amazon Cognito**  
-- Cơ chế *deduplication* tự quản lý bằng DynamoDB thay vì SNS FIFO vì:
-  1. SNS deduplication TTL chỉ 5 phút
-  2. SNS FIFO yêu cầu SQS FIFO
-  3. Chủ động báo cho sender biết message là bản sao
+Tác nhân Giám sát triển khai logic định tuyến thông minh bằng cách sử dụng Amazon Bedrock AgentCore để xác định động các mẫu cộng tác tác nhân phụ tối ưu.
 
----
+**Kiến trúc quản lý tri thức thông minh**
 
-## Staging ER7 microservice
+  * Cơ sở tri thức KYC triển khai một mẫu tạo sinh tăng cường truy xuất (RAG) để đưa ra các quyết định của tác nhân dựa trên thông tin thực tế, hiện tại thay vì chỉ dựa vào việc đào tạo foundation model. Amazon S3 lưu trữ các tài liệu nguồn, bao gồm các quy định từ các cơ quan tài chính, các quy tắc tuân thủ cụ thể của tổ chức, các chính sách nội bộ và tài liệu nhà cung cấp, được kích hoạt để theo dõi các thay đổi theo thời gian.
+  * Truy xuất nhận biết ngữ cảnh làm phong phú các truy vấn bằng thông tin cụ thể của trường hợp, bao gồm khu vực pháp lý của khách hàng, loại tài liệu và mức độ rủi ro – tạo điều kiện thuận lợi cho hướng dẫn quy định có liên quan cao.
+  * Kho quyết định thời gian thực (Real-Time Decision Store) (Amazon DynamoDB) bổ sung cho Cơ sở tri thức với khả năng truy cập dưới mili giây vào dữ liệu có cấu trúc được truy cập thường xuyên, bao gồm trạng thái quyết định KYC hiện tại, điểm rủi ro, lịch sử tương tác của khách hàng và các tham số cấu hình động kiểm soát hành vi của tác nhân.
 
-- Lambda “trigger” đăng ký với pub/sub hub, lọc message theo attribute  
-- Step Functions Express Workflow để chuyển ER7 → JSON  
-- Hai Lambda:
-  1. Sửa format ER7 (newline, carriage return)
-  2. Parsing logic  
-- Kết quả hoặc lỗi được đẩy lại vào pub/sub hub
 
----
 
-## Tính năng mới trong giải pháp
+* * *
 
-### 1. AWS CloudFormation cross-stack references
-Ví dụ *outputs* trong core microservice:
-```yaml
-Outputs:
-  Bucket:
-    Value: !Ref Bucket
-    Export:
-      Name: !Sub ${AWS::StackName}-Bucket
-  ArtifactBucket:
-    Value: !Ref ArtifactBucket
-    Export:
-      Name: !Sub ${AWS::StackName}-ArtifactBucket
-  Topic:
-    Value: !Ref Topic
-    Export:
-      Name: !Sub ${AWS::StackName}-Topic
-  Catalog:
-    Value: !Ref Catalog
-    Export:
-      Name: !Sub ${AWS::StackName}-Catalog
-  CatalogArn:
-    Value: !GetAtt Catalog.Arn
-    Export:
-      Name: !Sub ${AWS::StackName}-CatalogArn
+## Tích hợp an toàn với các hệ thống tài chính tại chỗ
+
+Kiến trúc tích hợp với các hệ thống tài chính tại chỗ thông qua Action Groups, kết nối lớp tác nhân gốc đám mây và cơ sở hạ tầng doanh nghiệp hiện có.
+
+Hệ thống quản lý khách hàng nhận các quyết định KYC theo thời gian thực, cập nhật trạng thái xác minh và cờ kích hoạt tài khoản. Hệ thống giám sát giao dịch tiêu thụ cảnh báo gian lận và điểm rủi ro, cho phép hành động ngay lập tức đối với các mẫu đáng ngờ. Hệ thống quản lý trường hợp nhận các trường hợp được leo thang với ngữ cảnh phân tích tác nhân toàn diện, đẩy nhanh quá trình xem xét của con người. Hệ thống rủi ro và AML tích hợp hai chiều để duy trì đánh giá rủi ro nhất quán. Hệ thống ngân hàng lõi nhận các xác thực đã được phê duyệt, kích hoạt kích hoạt tài khoản.
+
+Kết nối an toàn thông qua AWS Direct Connect hoặc AWS Site-to-Site VPN cung cấp truyền dữ liệu được mã hóa qua các đường dẫn mạng chuyên dụng. Các lệnh gọi API bao gồm ghi nhật ký kiểm toán toàn diện thông qua AWS CloudTrail và Amazon CloudWatch, đáp ứng các yêu cầu quy định.
+
+* * *
+
+## Các cân nhắc về bảo mật
+
+Giải pháp nên tích hợp các kiểm soát bảo mật đa lớp, giám sát liên tục và kiểm toán tuân thủ tự động để đáp ứng các kỳ vọng nghiêm ngặt của các cơ quan quản lý tài chính và các nhóm rủi ro nội bộ. Các tổ chức tài chính nên thực hiện mô hình hóa mối đe dọa toàn diện để xác định các rủi ro bao gồm cả những rủi ro do hệ thống AI tác nhân gây ra. Để biết thêm thông tin, vui lòng tham khảo Hướng dẫn bảo mật.
+
+* * *
+
+## Kết luận
+
+Kiến trúc KYC này sử dụng các dịch vụ serverless của AWS và Amazon Bedrock để xử lý các xác thực nhanh hơn và ở quy mô lớn. Mô hình thực thi tác nhân song song được thiết kế để giảm thời gian xác thực KYC từ 3-5 ngày thông thường xuống gần thời gian thực cho các trường hợp tiêu chuẩn. Cách tiếp cận này cho phép xử lý nhanh hơn theo cấp số nhân thông qua hoạt động đồng thời của các tác nhân Phân tích tài liệu, Xác minh danh tính và Phát hiện gian lận thay vì các quy trình làm việc tuần tự.
+
+Với kiến trúc này, các tổ chức tài chính có thể xử lý các xác thực khối lượng lớn thông qua khả năng mở rộng linh hoạt, tối ưu hóa chi phí thông qua mô hình định giá trả theo mức sử dụng serverless và cải thiện độ chính xác thông qua sự cộng tác của nhiều tác nhân
+
+**Nguồn tham khảo:** <https://awsstudygroup.com/2026/05/26/hien-dai-hoa-kyc-voi-cac-giai-phap-serverless-cua-aws-va-ai-agent-cho-dich-vu-tai-chinh/>
+
+* * *
